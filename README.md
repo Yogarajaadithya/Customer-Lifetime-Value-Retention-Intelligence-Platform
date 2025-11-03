@@ -61,6 +61,38 @@ Empty folders include a `.gitkeep` so they remain in version control until popul
 
 ## 4. Data flow from start to finish
 
+### Architecture flowgraph
+```mermaid
+flowchart TD
+    RAW[Raw CSV<br/>data/raw/customer_churn_dataset-training-master.csv]
+    EXTRACT[Extract Module<br/>src.extract.load_raw_data]
+    TRANSFORM[Transform Module<br/>src.transform.transform_customer_features]
+    TRAIN[Train & Score Module<br/>src.train_churn.train_and_score]
+    MODEL[Model Artifact<br/>models/churn_model.pkl]
+    CLEAN[data/processed/customer_churn_clean.csv]
+    SCORED[exports/churn_scored.csv]
+    IMPORTANCE[exports/feature_importance_top10.csv]
+    ML_AVAIL{MLflow Installed?}
+    MLFLOW[MLflow Tracking<br/>mlruns/]
+    MANUAL[Fallback JSON Logs<br/>mlruns/manual_logs/]
+    AIRFLOW[Airflow DAG<br/>dags/churn_clv_pipeline.py]
+    BI[Power BI Dashboard]
+
+    RAW -->|read_csv| EXTRACT -->|DataFrame| TRANSFORM -->|write_csv| CLEAN
+    CLEAN -->|train/test split & fit| TRAIN
+    TRAIN --> MODEL
+    TRAIN --> SCORED
+    TRAIN --> IMPORTANCE
+    TRAIN --> ML_AVAIL
+    ML_AVAIL -->|Yes| MLFLOW
+    ML_AVAIL -->|No| MANUAL
+    SCORED --> BI
+
+    AIRFLOW --> EXTRACT
+    AIRFLOW --> TRANSFORM
+    AIRFLOW --> TRAIN
+```
+
 ### Step 1 – Extraction (`src/extract.py`)
 - Function: `load_raw_data()`
 - Reads `data/raw/customer_churn_dataset-training-master.csv` into a pandas DataFrame.

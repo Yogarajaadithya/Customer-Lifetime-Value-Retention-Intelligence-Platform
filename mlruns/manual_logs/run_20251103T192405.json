@@ -1,0 +1,11 @@
+{
+  "run_timestamp": "2025-11-03T19:24:05.782878+00:00",
+  "metrics": {
+    "accuracy": 0.9991606837025191,
+    "roc_auc": 0.9999960148819661,
+    "f1": 0.999259451994476
+  },
+  "n_features": 24,
+  "export_path": "D:\\Portfolio Projects\\Customer Lifetime Value & Retention Intelligence Platform\\exports\\churn_scored.csv",
+  "feature_importance_path": "D:\\Portfolio Projects\\Customer Lifetime Value & Retention Intelligence Platform\\exports\\feature_importance_top10.csv"
+}

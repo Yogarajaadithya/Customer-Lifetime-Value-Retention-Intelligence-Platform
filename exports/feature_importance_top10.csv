@@ -1,0 +1,11 @@
+feature,importance
+rfm_monetary,0.23554614
+TotalSpend,0.14926867
+SupportCalls,0.13168445
+ContractType_Monthly,0.1260472
+PaymentDelay,0.109701395
+LastInteraction,0.059282348
+Age,0.05239302
+rfm_recency,0.03163262
+tenure_years,0.027051656
+SubscriptionType_Standard,0.023157418
